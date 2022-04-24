@@ -43,3 +43,6 @@ messageReceived: "<red><bold>{0} <white><!bold>---> <red><bold>ME<white><!bold>:
 # 2 - The message
 messageSent: "<red><bold>ME <white><!bold>---> <red><bold>{1}<white><!bold>: {2}"
 messengerNotFound: "<red>You have not messaged anyone!"
+
+# 0 - Toggled on/off
+godModeToggle: "<gold>God mode has been turned {0}"
