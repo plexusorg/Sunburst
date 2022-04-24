@@ -1,0 +1,4 @@
+# Sunburst Configuration 0.1 #
+storage:
+  # Valid storage types as of this version are: file
+  type: file
