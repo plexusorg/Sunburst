@@ -18,11 +18,11 @@ public class JoinListener extends SunburstListener
     public void createPlayer(PlayerJoinEvent event)
     {
         final Player player = event.getPlayer();
-        ISunburstPlayer sunburstPlayer = plugin.getHolder().getStorageSystem().getPlayer(player.getUniqueId());
+        ISunburstPlayer sunburstPlayer = plugin.getObjectHolder().getStorageSystem().getPlayer(player.getUniqueId());
         if (sunburstPlayer == null)
         {
             sunburstPlayer = new SunburstPlayer(player.getUniqueId(), player.getName(), player.getAddress().getAddress().getHostAddress());
-            plugin.getHolder().getStorageSystem().createPlayer(sunburstPlayer);
+            plugin.getObjectHolder().getStorageSystem().createPlayer(sunburstPlayer);
         }
         plugin.getPlayerCache().addPlayer(sunburstPlayer);
         if (sunburstPlayer.displayName() != null)
@@ -36,7 +36,7 @@ public class JoinListener extends SunburstListener
     {
         final Player player = event.getPlayer();
         plugin.getPlayerCache().getPlayer(player.getUniqueId()).ifPresent(sunburstPlayer -> {
-            plugin.getHolder().getStorageSystem().updatePlayer(sunburstPlayer);
+            plugin.getObjectHolder().getStorageSystem().updatePlayer(sunburstPlayer);
             plugin.getPlayerCache().removePlayer(sunburstPlayer);
         });
     }

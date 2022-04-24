@@ -1,5 +1,6 @@
 plugins {
     java
+    `maven-publish`
 }
 
 allprojects {
@@ -8,6 +9,7 @@ allprojects {
 }
 subprojects {
     apply(plugin = "java")
+    apply(plugin = "maven-publish")
     repositories {
         mavenCentral()
         maven {
@@ -36,7 +38,11 @@ subprojects {
 
 }
 var copyJars = tasks.register<Copy>("copyJars") {
-    from(subprojects.map { it.tasks.getByName<Jar>("shadowJar") })
+    from(subprojects.filter {
+         it.tasks.findByName("shadowJar") != null
+    }.map {
+        it.tasks.getByName<Jar>("shadowJar")
+    })
     into(file("build/libs"))
 }
 

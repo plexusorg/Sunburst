@@ -11,7 +11,7 @@ import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-public class ObjectHolder implements PluginBase, ChatRenderer
+public class ObjectHolder implements PluginBase
 {
     private IPermissionHandler permissionHandler;
     private IStorage storageSystem;
@@ -53,9 +53,4 @@ public class ObjectHolder implements PluginBase, ChatRenderer
         this.chatRenderer = renderer;
     }
 
-    @Override
-    public @NotNull Component render(@NotNull Player source, @NotNull Component sourceDisplayName, @NotNull Component message, @NotNull Audience viewer)
-    {
-        return ComponentUtil.configComponent("chatFormat", MiniMessage.miniMessage().serialize(source.displayName()), PlainTextComponentSerializer.plainText().serialize(message));
-    }
 }

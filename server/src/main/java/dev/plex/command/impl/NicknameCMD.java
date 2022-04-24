@@ -27,7 +27,7 @@ public class NicknameCMD extends SunburstCommand
             {
                 return confMsg("commandCheckConsole", this.getUsage());
             }
-            ISunburstPlayer sunburstPlayer = plugin.getHolder().getStorageSystem().getPlayer(player.getUniqueId());
+            ISunburstPlayer sunburstPlayer = plugin.getObjectHolder().getStorageSystem().getPlayer(player.getUniqueId());
             if (sunburstPlayer.displayName() == null)
             {
                 return confMsg("nicknameNotFound");
@@ -37,7 +37,7 @@ public class NicknameCMD extends SunburstCommand
         if (Bukkit.getOnlinePlayers().stream().anyMatch(p -> p.getName().equalsIgnoreCase(args[0])))
         {
             Player target = getNonNullPlayer(args[0]);
-            ISunburstPlayer sunburstPlayer = plugin.getHolder().getStorageSystem().getPlayer(target.getUniqueId());
+            ISunburstPlayer sunburstPlayer = plugin.getObjectHolder().getStorageSystem().getPlayer(target.getUniqueId());
             if (args.length < 2)
             {
                 return usage();
@@ -62,7 +62,7 @@ public class NicknameCMD extends SunburstCommand
             {
                 return confMsg("commandCheckConsole", this.getUsage());
             }
-            ISunburstPlayer sunburstPlayer = plugin.getHolder().getStorageSystem().getPlayer(player.getUniqueId());
+            ISunburstPlayer sunburstPlayer = plugin.getObjectHolder().getStorageSystem().getPlayer(player.getUniqueId());
             sunburstPlayer.displayName(null);
             return confMsg("nicknameRemoved");
         }
@@ -70,7 +70,7 @@ public class NicknameCMD extends SunburstCommand
         {
             return confMsg("commandCheckConsole", this.getUsage());
         }
-        ISunburstPlayer sunburstPlayer = plugin.getHolder().getStorageSystem().getPlayer(player.getUniqueId());
+        ISunburstPlayer sunburstPlayer = plugin.getObjectHolder().getStorageSystem().getPlayer(player.getUniqueId());
         String nickname = args[0];
         nickname = nickname.replace("<newline>", "").replace("<br>", "");
         Component newNickname = MiniMessage.miniMessage().deserialize(nickname, ComponentUtil.REGULAR_TAGS);

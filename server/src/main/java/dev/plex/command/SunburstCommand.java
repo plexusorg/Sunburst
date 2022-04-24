@@ -59,7 +59,7 @@ public abstract class SunburstCommand extends Command implements PluginIdentifia
     @Override
     public boolean execute(@NotNull CommandSender sender, @NotNull String commandLabel, @NotNull String[] args)
     {
-        if (this.getPermission() != null && !plugin.getHolder().getPermissionHandler().hasPermission(sender, this.getPermission()))
+        if (this.getPermission() != null && !plugin.getObjectHolder().getPermissionHandler().hasPermission(sender, this.getPermission()))
         {
             sender.sendMessage(confMsg("noPermission", this.getPermission()));
             return true;

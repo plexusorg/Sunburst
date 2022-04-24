@@ -1,6 +1,6 @@
 plugins {
     java
-    id("com.github.johnrengelman.shadow") version "7.1.2"
+    `maven-publish`
 }
 
 dependencies {
@@ -9,12 +9,12 @@ dependencies {
 
 tasks {
     build {
-        dependsOn(shadowJar)
+        dependsOn(publishToMavenLocal)
     }
 }
-tasks.getByName<Jar>("shadowJar") {
+tasks.getByName<Jar>("jar") {
     archiveBaseName.set("Sunburst")
-    archiveClassifier.set("API")
+    archiveClassifier.set("")
 }
 
 tasks.register<Wrapper>("wrapper")
@@ -22,3 +22,14 @@ tasks.register<Wrapper>("wrapper")
     gradleVersion = "7.4.2"
 }
 tasks.register("prepareKotlinBuildScriptModel"){}
+
+publishing {
+    publications {
+        create<MavenPublication>("maven") {
+            groupId = project.group as String
+            version = project.version as String
+            artifactId = "sunburst-api"
+            from(components["java"])
+        }
+    }
+}

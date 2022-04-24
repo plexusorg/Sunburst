@@ -8,17 +8,19 @@ import dev.plex.permission.PermissionHandlerImpl;
 import dev.plex.player.ISunburstPlayer;
 import dev.plex.player.PlayerCache;
 import dev.plex.player.SunburstPlayer;
+import dev.plex.plugin.SunburstPlugin;
 import dev.plex.storage.FileStorage;
+import dev.plex.util.ComponentUtil;
 import dev.plex.util.Configuration;
-import dev.plex.util.ObjectHolder;
 import lombok.Getter;
 import lombok.Setter;
+import net.kyori.adventure.text.minimessage.MiniMessage;
+import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import org.bukkit.Bukkit;
-import org.bukkit.plugin.java.JavaPlugin;
 
 @Getter
 @Setter
-public final class Sunburst extends JavaPlugin
+public final class Sunburst extends SunburstPlugin
 {
     private static Sunburst plugin;
 
@@ -27,10 +29,9 @@ public final class Sunburst extends JavaPlugin
     private Configuration configuration;
     private Configuration messages;
 
-    private ObjectHolder holder;
 
     @Override
-    public void onLoad()
+    public void load()
     {
         plugin = this;
         this.configuration = new Configuration(this, "config.yml");
@@ -39,15 +40,14 @@ public final class Sunburst extends JavaPlugin
         this.configuration.load();
         this.messages.load();
 
-        this.holder = new ObjectHolder();
-        this.holder.setPermissionHandler(new PermissionHandlerImpl());
-        this.holder.setChatRenderer(holder);
+        this.getObjectHolder().setPermissionHandler(new PermissionHandlerImpl());
+        this.getObjectHolder().setChatRenderer((source, sourceDisplayName, message, viewer) -> ComponentUtil.configComponent("chatFormat", MiniMessage.miniMessage().serialize(source.displayName()), PlainTextComponentSerializer.plainText().serialize(message)));
     }
 
     @Override
     public void onEnable()
     {
-        this.holder.setStorageSystem(new FileStorage());
+        this.getObjectHolder().setStorageSystem(new FileStorage());
 
         new JoinListener();
         new ChatListener();
@@ -56,11 +56,11 @@ public final class Sunburst extends JavaPlugin
 
         Bukkit.getOnlinePlayers().forEach(player ->
         {
-            ISunburstPlayer sunburstPlayer = plugin.getHolder().getStorageSystem().getPlayer(player.getUniqueId());
+            ISunburstPlayer sunburstPlayer = plugin.getObjectHolder().getStorageSystem().getPlayer(player.getUniqueId());
             if (sunburstPlayer == null)
             {
                 sunburstPlayer = new SunburstPlayer(player.getUniqueId(), player.getName(), player.getAddress().getAddress().getHostAddress());
-                plugin.getHolder().getStorageSystem().createPlayer(sunburstPlayer);
+                plugin.getObjectHolder().getStorageSystem().createPlayer(sunburstPlayer);
             }
             plugin.getPlayerCache().addPlayer(sunburstPlayer);
             if (sunburstPlayer.displayName() != null)
@@ -74,7 +74,7 @@ public final class Sunburst extends JavaPlugin
     public void onDisable()
     {
         plugin.getPlayerCache().getPlayers().forEach(sunburstPlayer -> {
-            plugin.getHolder().getStorageSystem().updatePlayer(sunburstPlayer);
+            plugin.getObjectHolder().getStorageSystem().updatePlayer(sunburstPlayer);
         });
     }
 
