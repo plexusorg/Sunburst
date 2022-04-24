@@ -1,0 +1,33 @@
+# --------------------- #
+
+# Sunburst Messages 0.1 #
+
+# --------------------- #
+
+# 0 - The permission node
+noPermission: "<red>You lack the permission node <gold>{0}"
+consoleOnly: "<red>This command may only be used from console"
+playerOnly: "<red>This command may only be used in-game"
+
+# 0 - The command usage
+commandCheckPlayer: "<red>This command can only be used from console. The usage is <gold>{0}"
+commandCheckConsole: "<red>This command can only be used in-game. The usage is <gold>{0}"
+
+# 0 - The command usage
+incorrectUsage: "<red>The correct usage is <gold>{0}"
+
+# 0 - The nickname
+nickname: "<aqua>Your nickname is {0}"
+nicknameNotFound: "<red>You currently don't have a nickname set"
+nicknameRemoved: "<red>Your nickname has been removed"
+# 0 - The targeted player
+nicknameRemovedOther: "<green>You removed {0}'s nickname"
+# 0 - The nickname
+nicknameSet: "<aqua>Your nickname has been set to {0}"
+# 0 - The targeted player
+# 1 - The nickname
+nicknameSetOther: "<aqua>You have set {0}'s nickname to {1}"
+
+# 0 - Player username
+# 1 - Message
+chatFormat: "<aqua>{0}: <white>{1}"

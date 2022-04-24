@@ -41,6 +41,6 @@ public interface ISunburstPlayer
 
     default String toJSON()
     {
-        return new GsonBuilder().setPrettyPrinting().registerTypeAdapter(Component.class, (JsonSerializer<Component>) (src, typeOfSrc, context) -> new JsonPrimitive(MiniMessage.miniMessage().serialize(src))).create().toJson(this);
+        return new GsonBuilder().setPrettyPrinting().registerTypeAdapter(Component.class, (JsonSerializer<Component>) (src, typeOfSrc, context) -> new JsonPrimitive(MiniMessage.miniMessage().serialize(src))).disableHtmlEscaping().create().toJson(this);
     }
 }

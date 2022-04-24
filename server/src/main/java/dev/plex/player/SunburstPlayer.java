@@ -2,6 +2,8 @@ package dev.plex.player;
 
 import lombok.RequiredArgsConstructor;
 import net.kyori.adventure.text.Component;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 
 import java.util.UUID;
 
@@ -78,6 +80,11 @@ public class SunburstPlayer implements ISunburstPlayer
     public void displayName(Component displayName)
     {
         this.displayName = displayName;
+        Player player = Bukkit.getPlayer(uuid);
+        if (player != null)
+        {
+            player.displayName(displayName);
+        }
     }
 
     @Override

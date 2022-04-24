@@ -18,13 +18,17 @@ public class JoinListener extends SunburstListener
     public void createPlayer(PlayerJoinEvent event)
     {
         final Player player = event.getPlayer();
-        ISunburstPlayer sunburstPlayer = plugin.getFileStorage().getPlayer(player.getUniqueId());
+        ISunburstPlayer sunburstPlayer = plugin.getHolder().getStorageSystem().getPlayer(player.getUniqueId());
         if (sunburstPlayer == null)
         {
             sunburstPlayer = new SunburstPlayer(player.getUniqueId(), player.getName(), player.getAddress().getAddress().getHostAddress());
-            plugin.getFileStorage().createPlayer(sunburstPlayer);
+            plugin.getHolder().getStorageSystem().createPlayer(sunburstPlayer);
         }
         plugin.getPlayerCache().addPlayer(sunburstPlayer);
+        if (sunburstPlayer.displayName() != null)
+        {
+            player.displayName(sunburstPlayer.displayName());
+        }
     }
 
     @EventHandler
@@ -32,11 +36,7 @@ public class JoinListener extends SunburstListener
     {
         final Player player = event.getPlayer();
         plugin.getPlayerCache().getPlayer(player.getUniqueId()).ifPresent(sunburstPlayer -> {
-            Logger.debug("Found cached player");
-            sunburstPlayer.displayName(MiniMessage.miniMessage().deserialize("<red>Test"));
-            Bukkit.getConsoleSender().sendMessage(MiniMessage.miniMessage().serialize(sunburstPlayer.displayName()));
-            Bukkit.getConsoleSender().sendMessage(MiniMessage.miniMessage().serialize(MiniMessage.miniMessage().deserialize("<red>Test")));
-            plugin.getFileStorage().updatePlayer(sunburstPlayer);
+            plugin.getHolder().getStorageSystem().updatePlayer(sunburstPlayer);
             plugin.getPlayerCache().removePlayer(sunburstPlayer);
         });
     }

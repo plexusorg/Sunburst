@@ -2,9 +2,7 @@ package dev.plex.player;
 
 import com.google.common.collect.Maps;
 
-import java.util.Map;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 public class PlayerCache
 {
@@ -23,6 +21,11 @@ public class PlayerCache
     public Optional<ISunburstPlayer> getPlayer(UUID uuid)
     {
         return Optional.ofNullable(PLAYERS.get(uuid));
+    }
+
+    public Collection<ISunburstPlayer> getPlayers()
+    {
+        return PLAYERS.values();
     }
 
     public void removePlayer(UUID uuid)

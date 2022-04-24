@@ -2,3 +2,7 @@
 storage:
   # Valid storage types as of this version are: file
   type: file
+
+options:
+  # Enable/Disable Sunburst's chat listening
+  chat: false
