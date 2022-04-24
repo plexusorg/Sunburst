@@ -9,6 +9,7 @@ import dev.plex.util.CommandUtil;
 import dev.plex.util.ComponentUtil;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
+import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -112,6 +113,11 @@ public abstract class SunburstCommand extends Command implements PluginIdentifia
     protected Component confMsg(String entry, Object... objects)
     {
         return ComponentUtil.configComponent(entry, objects);
+    }
+
+    protected Component confMsg(String entry, TagResolver[] tagResolvers, Object... objects)
+    {
+        return ComponentUtil.configComponent(entry, tagResolvers, objects);
     }
 
     protected Component usage()

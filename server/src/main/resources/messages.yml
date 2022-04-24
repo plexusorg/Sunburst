@@ -28,6 +28,7 @@ nicknameSet: "<aqua>Your nickname has been set to {0}"
 # 0 - The targeted player
 # 1 - The nickname
 nicknameSetOther: "<aqua>You have set {0}'s nickname to {1}"
+nicknameMatchesPlayer: "<red>This nickname is the same as another player's username"
 
 # 0 - Player username
 # 1 - Message

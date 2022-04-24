@@ -12,8 +12,10 @@ import dev.plex.plugin.SunburstPlugin;
 import dev.plex.storage.FileStorage;
 import dev.plex.util.ComponentUtil;
 import dev.plex.util.Configuration;
+import dev.plex.util.Logger;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.extern.java.Log;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import org.bukkit.Bukkit;
@@ -41,7 +43,16 @@ public final class Sunburst extends SunburstPlugin
         this.messages.load();
 
         this.getObjectHolder().setPermissionHandler(new PermissionHandlerImpl());
-        this.getObjectHolder().setChatRenderer((source, sourceDisplayName, message, viewer) -> ComponentUtil.configComponent("chatFormat", MiniMessage.miniMessage().serialize(source.displayName()), PlainTextComponentSerializer.plainText().serialize(message)));
+        this.getObjectHolder().setChatRenderer((source, sourceDisplayName, message, viewer) -> {
+            Logger.log("Spokenz");
+            Logger.log(ComponentUtil.mmCustom(sourceDisplayName, ComponentUtil.REGULAR_TAGS));
+            return ComponentUtil.configComponent("chatFormat",
+                    ComponentUtil.REGULAR_TAGS,
+                    ComponentUtil.mmCustom(sourceDisplayName, ComponentUtil.REGULAR_TAGS),
+                    PlainTextComponentSerializer.plainText().serialize(message));
+        });
+
+        Logger.debug("Loading");
     }
 
     @Override

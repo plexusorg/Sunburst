@@ -5,8 +5,12 @@ import dev.plex.command.util.CommandInfo;
 import dev.plex.command.util.CommandPerms;
 import dev.plex.player.ISunburstPlayer;
 import dev.plex.util.ComponentUtil;
+import dev.plex.util.Logger;
+import dev.plex.util.MojangUtils;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
+import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
+import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
@@ -32,7 +36,7 @@ public class NicknameCMD extends SunburstCommand
             {
                 return confMsg("nicknameNotFound");
             }
-            return confMsg("nickname", miniString(sunburstPlayer.displayName()));
+            return confMsg("nickname", ComponentUtil.REGULAR_TAGS, ComponentUtil.mmCustom(sunburstPlayer.displayName(), ComponentUtil.REGULAR_TAGS));
         }
         if (Bukkit.getOnlinePlayers().stream().anyMatch(p -> p.getName().equalsIgnoreCase(args[0])))
         {
@@ -48,12 +52,20 @@ public class NicknameCMD extends SunburstCommand
                 target.sendMessage(confMsg("nicknameRemoved"));
                 return confMsg("nicknameRemovedOther", target.getName());
             }
-            String nickname = args[1];
+            String nickname = StringUtils.join(args, " ", 1, args.length);
             nickname = nickname.replace("<newline>", "").replace("<br>", "");
             Component newNickname = MiniMessage.miniMessage().deserialize(nickname, ComponentUtil.REGULAR_TAGS);
+            String rawNick = PlainTextComponentSerializer.plainText().serialize(newNickname);
+            if (!rawNick.equalsIgnoreCase(target.getName()) && Bukkit.getOfflinePlayer(rawNick).hasPlayedBefore())
+            {
+                if (Bukkit.getOfflinePlayer(nickname).hasPlayedBefore())
+                {
+                    return confMsg("nicknameMatchesPlayer");
+                }
+            }
             sunburstPlayer.displayName(newNickname);
-            target.sendMessage(confMsg("nicknameSet", nickname));
-            return confMsg("nicknameSetOther", target.getName(), nickname);
+            target.sendMessage(confMsg("nicknameSet", ComponentUtil.REGULAR_TAGS, ComponentUtil.mmCustom(newNickname, ComponentUtil.REGULAR_TAGS)));
+            return confMsg("nicknameSetOther", ComponentUtil.REGULAR_TAGS, target.getName(), ComponentUtil.mmCustom(newNickname, ComponentUtil.REGULAR_TAGS));
         }
 
         if (args[0].equalsIgnoreCase("off"))
@@ -71,10 +83,15 @@ public class NicknameCMD extends SunburstCommand
             return confMsg("commandCheckConsole", this.getUsage());
         }
         ISunburstPlayer sunburstPlayer = plugin.getObjectHolder().getStorageSystem().getPlayer(player.getUniqueId());
-        String nickname = args[0];
+        String nickname = StringUtils.join(args, " ");
         nickname = nickname.replace("<newline>", "").replace("<br>", "");
         Component newNickname = MiniMessage.miniMessage().deserialize(nickname, ComponentUtil.REGULAR_TAGS);
+        String rawNick = PlainTextComponentSerializer.plainText().serialize(newNickname);
+        if (!rawNick.equalsIgnoreCase(player.getName()) && MojangUtils.getInfo(rawNick) != null)
+        {
+            return confMsg("nicknameMatchesPlayer");
+        }
         sunburstPlayer.displayName(newNickname);
-        return confMsg("nicknameSet", nickname);
+        return confMsg("nicknameSet", ComponentUtil.REGULAR_TAGS, ComponentUtil.mmCustom(newNickname, ComponentUtil.REGULAR_TAGS));
     }
 }

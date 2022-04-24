@@ -12,6 +12,7 @@ dependencies {
     annotationProcessor("org.projectlombok:lombok:1.18.22")
 
     library("org.json:json:20220320")
+    library("org.apache.httpcomponents:httpclient:4.5.13")
 }
 
 bukkit {

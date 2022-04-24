@@ -31,6 +31,31 @@ public class ComponentUtil
         return value;
     }
 
+    public static String miniString(Component component)
+    {
+        return mmCustom(component, TagResolver.standard());
+    }
+
+    public static String mmCustom(Component component, TagResolver... tags)
+    {
+        return MiniMessage.builder().tags(TagResolver.resolver(tags)).build().serialize(component);
+    }
+
+    public static Component mini(String message)
+    {
+        return mmCustom(message, TagResolver.standard());
+    }
+
+    public static Component mmCustom(String message, TagResolver... tags)
+    {
+        return MiniMessage.builder().tags(TagResolver.resolver(tags)).build().deserialize(message);
+    }
+
+    public static Component configComponent(String entry, TagResolver[] tagResolvers, Object... objects)
+    {
+        return MiniMessage.builder().tags(TagResolver.resolver(tagResolvers)).build().deserialize(configMessage(entry, objects));
+    }
+
     public static Component configComponent(String entry, Object... objects)
     {
         return MiniMessage.miniMessage().deserialize(configMessage(entry, objects));
