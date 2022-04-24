@@ -1,6 +1,8 @@
 package dev.plex;
 
+import dev.plex.command.impl.MessageCMD;
 import dev.plex.command.impl.NicknameCMD;
+import dev.plex.command.impl.ReplyCMD;
 import dev.plex.command.impl.SunburstCMD;
 import dev.plex.listener.impl.player.ChatListener;
 import dev.plex.listener.impl.player.JoinListener;
@@ -53,6 +55,8 @@ public final class Sunburst extends SunburstPlugin
         new ChatListener();
         new NicknameCMD();
         new SunburstCMD();
+        new MessageCMD();
+        new ReplyCMD();
 
         Bukkit.getOnlinePlayers().forEach(player ->
         {

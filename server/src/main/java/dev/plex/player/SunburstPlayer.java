@@ -1,5 +1,6 @@
 package dev.plex.player;
 
+import dev.plex.messaging.MessageData;
 import lombok.RequiredArgsConstructor;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
@@ -15,6 +16,8 @@ public class SunburstPlayer implements ISunburstPlayer
     private final String ip;
 
     private Component displayName;
+
+    private transient MessageData messageData;
 
     private boolean godMode;
     private boolean muted;
@@ -77,6 +80,12 @@ public class SunburstPlayer implements ISunburstPlayer
     }
 
     @Override
+    public MessageData messageData()
+    {
+        return messageData;
+    }
+
+    @Override
     public void displayName(Component displayName)
     {
         this.displayName = displayName;
@@ -115,5 +124,11 @@ public class SunburstPlayer implements ISunburstPlayer
     public void socialSpy(boolean socialSpy)
     {
         this.socialSpy = socialSpy;
+    }
+
+    @Override
+    public void messageData(MessageData messageData)
+    {
+        this.messageData = messageData;
     }
 }

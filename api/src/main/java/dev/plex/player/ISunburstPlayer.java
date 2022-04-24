@@ -1,6 +1,7 @@
 package dev.plex.player;
 
 import com.google.gson.*;
+import dev.plex.messaging.MessageData;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 
@@ -27,6 +28,8 @@ public interface ISunburstPlayer
 
     boolean socialSpy();
 
+    MessageData messageData();
+
     void displayName(Component displayName);
 
     void godMode(boolean godMode);
@@ -38,6 +41,8 @@ public interface ISunburstPlayer
     void afk(boolean afk);
 
     void socialSpy(boolean socialSpy);
+
+    void messageData(MessageData messageData);
 
     default String toJSON()
     {
