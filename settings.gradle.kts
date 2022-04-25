@@ -8,5 +8,5 @@ pluginManagement {
 rootProject.name = "sunburst"
 include(":server")
 project(":server").name = "sunburst-server"
-include("api")
+include(":api")
 project(":api").name = "sunburst-api"

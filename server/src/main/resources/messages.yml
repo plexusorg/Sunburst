@@ -47,3 +47,5 @@ messengerNotFound: "<red>You have not messaged anyone!"
 
 # 0 - Toggled on/off
 godModeToggle: "<gold>God mode has been turned {0}"
+
+spawnSet: "<green>This world's spawn location has been set!"

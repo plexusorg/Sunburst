@@ -5,7 +5,6 @@ import dev.plex.command.util.CommandInfo;
 import dev.plex.command.util.CommandPerms;
 import dev.plex.player.ISunburstPlayer;
 import dev.plex.util.ComponentUtil;
-import dev.plex.util.Logger;
 import dev.plex.util.MojangUtils;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
@@ -40,13 +39,17 @@ public class NicknameCMD extends SunburstCommand
         }
         if (Bukkit.getOnlinePlayers().stream().anyMatch(p -> p.getName().equalsIgnoreCase(args[0])))
         {
-            Player target = getNonNullPlayer(args[0]);
-            ISunburstPlayer sunburstPlayer = plugin.getObjectHolder().getStorageSystem().getPlayer(target.getUniqueId());
+            if (!sender.hasPermission(getPermission() + ".other"))
+            {
+                return confMsg("noPermission", getPermission() + ".other");
+            }
             if (args.length < 2)
             {
                 return usage();
             }
-            if (args[1].equalsIgnoreCase("off"))
+            Player target = getNonNullPlayer(args[0]);
+            ISunburstPlayer sunburstPlayer = plugin.getObjectHolder().getStorageSystem().getPlayer(target.getUniqueId());
+            if (args[1].equalsIgnoreCase("off") || args[1].equalsIgnoreCase("clear"))
             {
                 sunburstPlayer.displayName(null);
                 target.sendMessage(confMsg("nicknameRemoved"));
@@ -68,7 +71,7 @@ public class NicknameCMD extends SunburstCommand
             return confMsg("nicknameSetOther", ComponentUtil.REGULAR_TAGS, target.getName(), ComponentUtil.mmCustom(newNickname, ComponentUtil.REGULAR_TAGS));
         }
 
-        if (args[0].equalsIgnoreCase("off"))
+        if (args[0].equalsIgnoreCase("off") || args[0].equalsIgnoreCase("clear"))
         {
             if (sender instanceof ConsoleCommandSender)
             {

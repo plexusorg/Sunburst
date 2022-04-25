@@ -4,6 +4,7 @@ import dev.plex.command.impl.*;
 import dev.plex.listener.impl.player.ChatListener;
 import dev.plex.listener.impl.player.GodListener;
 import dev.plex.listener.impl.player.JoinListener;
+import dev.plex.listener.impl.player.SpawnListener;
 import dev.plex.permission.PermissionHandlerImpl;
 import dev.plex.player.ISunburstPlayer;
 import dev.plex.player.PlayerCache;
@@ -13,10 +14,10 @@ import dev.plex.storage.FileStorage;
 import dev.plex.util.ComponentUtil;
 import dev.plex.util.Configuration;
 import dev.plex.util.Logger;
+import dev.plex.world.JsonWorldManager;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.extern.java.Log;
-import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import org.bukkit.Bukkit;
 
@@ -31,6 +32,8 @@ public final class Sunburst extends SunburstPlugin
     private Configuration configuration;
     private Configuration messages;
 
+    @Getter(AccessLevel.NONE)
+    private JsonWorldManager jsonWorldManager;
 
     @Override
     public void load()
@@ -59,16 +62,20 @@ public final class Sunburst extends SunburstPlugin
     public void onEnable()
     {
         this.getObjectHolder().setStorageSystem(new FileStorage());
+        this.jsonWorldManager = new JsonWorldManager();
 
         new JoinListener();
         new ChatListener();
         new GodListener();
+        new SpawnListener();
 
         new NicknameCMD();
         new SunburstCMD();
         new MessageCMD();
         new ReplyCMD();
         new GodCMD();
+        new SetSpawnCMD();
+        new SpawnCMD();
 
         Bukkit.getOnlinePlayers().forEach(player ->
         {
@@ -92,6 +99,12 @@ public final class Sunburst extends SunburstPlugin
         plugin.getPlayerCache().getPlayers().forEach(sunburstPlayer -> {
             plugin.getObjectHolder().getStorageSystem().updatePlayer(sunburstPlayer);
         });
+    }
+
+    @Override
+    public JsonWorldManager getWorldManager()
+    {
+        return jsonWorldManager;
     }
 
     public static Sunburst inst()

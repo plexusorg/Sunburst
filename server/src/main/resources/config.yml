@@ -5,4 +5,9 @@ storage:
 
 options:
   # Enable/Disable Sunburst's chat listening
-  chat: false
+  chat: true
+  # If the player should be teleported to the world spawn on join
+  auto-spawn: true
+  # If set, the player will spawn in this world automatically at its set spawn location, and if the world
+  # does not exist, they will spawn at the world they're in's spawn point
+  global-spawn-world: "flatlands"
