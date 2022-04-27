@@ -49,3 +49,5 @@ messengerNotFound: "<red>You have not messaged anyone!"
 godModeToggle: "<gold>God mode has been turned {0}"
 
 spawnSet: "<green>This world's spawn location has been set!"
+
+clearedInventory: "<gold>Your inventory has been cleared."

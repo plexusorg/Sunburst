@@ -1,10 +1,7 @@
 package dev.plex;
 
-import dev.plex.command.impl.*;
-import dev.plex.listener.impl.player.ChatListener;
-import dev.plex.listener.impl.player.GodListener;
-import dev.plex.listener.impl.player.JoinListener;
-import dev.plex.listener.impl.player.SpawnListener;
+import dev.plex.handler.CommandHandler;
+import dev.plex.handler.ListenerHandler;
 import dev.plex.permission.PermissionHandlerImpl;
 import dev.plex.player.ISunburstPlayer;
 import dev.plex.player.PlayerCache;
@@ -46,7 +43,8 @@ public final class Sunburst extends SunburstPlugin
         this.messages.load();
 
         this.getObjectHolder().setPermissionHandler(new PermissionHandlerImpl());
-        this.getObjectHolder().setChatRenderer((source, sourceDisplayName, message, viewer) -> {
+        this.getObjectHolder().setChatRenderer((source, sourceDisplayName, message, viewer) ->
+        {
             Logger.log("Spokenz");
             Logger.log(ComponentUtil.mmCustom(sourceDisplayName, ComponentUtil.REGULAR_TAGS));
             return ComponentUtil.configComponent("chatFormat",
@@ -61,21 +59,11 @@ public final class Sunburst extends SunburstPlugin
     @Override
     public void onEnable()
     {
+        new ListenerHandler();
+        new CommandHandler();
+
         this.getObjectHolder().setStorageSystem(new FileStorage());
         this.jsonWorldManager = new JsonWorldManager();
-
-        new JoinListener();
-        new ChatListener();
-        new GodListener();
-        new SpawnListener();
-
-        new NicknameCMD();
-        new SunburstCMD();
-        new MessageCMD();
-        new ReplyCMD();
-        new GodCMD();
-        new SetSpawnCMD();
-        new SpawnCMD();
 
         Bukkit.getOnlinePlayers().forEach(player ->
         {
@@ -96,7 +84,8 @@ public final class Sunburst extends SunburstPlugin
     @Override
     public void onDisable()
     {
-        plugin.getPlayerCache().getPlayers().forEach(sunburstPlayer -> {
+        plugin.getPlayerCache().getPlayers().forEach(sunburstPlayer ->
+        {
             plugin.getObjectHolder().getStorageSystem().updatePlayer(sunburstPlayer);
         });
     }

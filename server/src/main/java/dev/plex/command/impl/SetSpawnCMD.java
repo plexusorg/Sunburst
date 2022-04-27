@@ -1,11 +1,9 @@
 package dev.plex.command.impl;
 
-import dev.plex.Sunburst;
 import dev.plex.command.SunburstCommand;
 import dev.plex.command.util.CommandInfo;
 import dev.plex.command.util.CommandPerms;
 import dev.plex.command.util.RequiredSource;
-import dev.plex.util.ComponentUtil;
 import dev.plex.util.XYZLocation;
 import dev.plex.world.WorldSettingsImpl;
 import net.kyori.adventure.text.Component;
@@ -25,7 +23,9 @@ public class SetSpawnCMD extends SunburstCommand
         if (plugin.getWorldManager().getSettings(player.getWorld()) != null)
         {
             plugin.getWorldManager().getSettings(player.getWorld()).spawnLocation(location);
-        } else {
+        }
+        else
+        {
             WorldSettingsImpl worldSettings = new WorldSettingsImpl();
             worldSettings.world(player.getWorld());
             worldSettings.spawnLocation(location);

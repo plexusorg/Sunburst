@@ -1,6 +1,16 @@
-/.gradle/
-/**/*/build/
-/build/
 /.idea/
-/**/*/gradle/
-/**/*/gradlew*
+*.iml
+/target/
+
+# OS
+.DS_Store
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Gradle
+/build/
+/*/build/
+/.gradle/
